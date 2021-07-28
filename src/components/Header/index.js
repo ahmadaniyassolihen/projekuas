@@ -15,12 +15,13 @@ export default Header;
 const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 30,
-    paddingTop: 20,
+    paddingTop: 13,
     backgroundColor:'#29839F'
   },
   headerText: {
     fontSize: 20,
-    // fontWeight: 'bold',
+    marginBottom: 6,
+    fontWeight: 'bold',
     color: 'white',
   },
   underLine: {

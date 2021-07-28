@@ -10,8 +10,9 @@ const Splash = ({navigation}) => {
     return (
         <View style={Styles.Atas}>
         <View style={Styles.wrapper}>
-            <Image source={require('../../assets/catatan.jpg')} style={{height:100,width:100}} />
-            <Text style={{fontSize:15,color:'white'}}>CATATANKU</Text>
+            <Image source={require('../../assets/catatan.jpg')} style={{height:100,width:100,borderRadius:20}} />
+            <Text style={{fontSize:12,color:'white'}}>BUKU</Text>
+            <Text style={{fontSize:16,color:'white'}}>CATATANKU</Text>
             </View>
         </View>
     )

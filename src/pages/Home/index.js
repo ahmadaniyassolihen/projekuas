@@ -1,7 +1,7 @@
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
+import {faBookMedical} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, TouchableOpacity, Alert} from 'react-native';
+import {Text, StyleSheet, View, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import {Header, CardContact} from '../../components';
 
 import FIREBASE from '../../config/firebase';
@@ -11,8 +11,8 @@ class Home extends Component {
     super();
 
     this.state = {
-      kontaks: {},
-      kontakKey: [],
+      notes: {},
+      noteKey: [],
     };
   }
   // method react untuk meloading data awal
@@ -22,20 +22,20 @@ class Home extends Component {
   // ambil data
   ambilData = () => {
     FIREBASE.database()
-      .ref('Kontak')
+      .ref('Note')
       .once('value', querySnapShot => {
         let data = querySnapShot.val() ? querySnapShot.val() : {};
-        let kontakItem = {...data};
+        let contentItem = {...data};
 
         this.setState({
-          kontaks: kontakItem,
-          kontakKey: Object.keys(kontakItem),
+          notes: contentItem,
+          noteKey: Object.keys(contentItem),
         });
       });
   };
   // metode untuk hapus data
   hapusData = id => {
-    Alert.alert('Warning', 'Apakah anda yakin akan menghapus Catatan?', [
+    Alert.alert('Warning', 'Apakah anda yakin akan menghapus Catatan ini?', [
       {
         text: 'Cancel', // Jika tekan cancel maka batal melakukan penghapusan
         onPress: () => console.log('Cancel Pressed'),
@@ -45,7 +45,7 @@ class Home extends Component {
         text: 'OK', // Jika tekan oke maka akan melakukan penghapusan data ke database
         onPress: () => {
           FIREBASE.database()
-            .ref('Kontak/' + id)
+            .ref('Note/' + id)
             .remove();
           // abil data setelah hapus data supaya update
           this.ambilData();
@@ -57,17 +57,18 @@ class Home extends Component {
   };
 
   render() {
-    const {kontaks, kontakKey} = this.state;
+    const {notes, noteKey} = this.state;
     return (
       <View style={styles.wrapper}>
         <Header />
-
+        <ScrollView>
+        
         <View style={styles.listContact}>
-          {kontakKey.length > 0 ? (
-            kontakKey.map(key => (
+          {noteKey.length > 0 ? (
+            noteKey.map(key => (
               <CardContact
                 key={key}
-                kontakItem={kontaks[key]}
+                contentItem={notes[key]}
                 id={key}
                 {...this.props}
                 removeData={this.hapusData}
@@ -77,12 +78,12 @@ class Home extends Component {
             <Text>Tidak ada catatan!</Text>
           )}
         </View>
-
+        </ScrollView>
         <View style={styles.wrapperButton}>
           <TouchableOpacity
             style={styles.btnAdd}
             onPress={() => this.props.navigation.navigate('AddContact')}>
-            <FontAwesomeIcon icon={faPlus} size={20} color={'white'} />
+            <FontAwesomeIcon icon={faBookMedical} size={30} color={'white'} />
           </TouchableOpacity>
         </View>
       </View>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
 
   },
   btnAdd: {
-    padding: 25,
+    padding: 20,
     backgroundColor: '#29839F',
     borderRadius: 35,
     shadowColor: '#000',

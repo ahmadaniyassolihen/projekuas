@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput} from 'react-native';
 
-const InputGrup = ({
+const InputEdit = ({
   label,
   isTextArea,
   keyType,
@@ -38,7 +38,7 @@ const InputGrup = ({
   );
 };
 
-export default InputGrup;
+export default InputEdit;
 
 const styles = StyleSheet.create({
   label: {
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     padding: 10,
     marginBottom: 10,
-    backgroundColor:'white',
     height: 60,
   },
   inputArea: {
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     padding: 10,
     marginBottom: 10,
-    backgroundColor:'white',
     height: 180,
   },
 });

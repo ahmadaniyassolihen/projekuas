@@ -3,13 +3,15 @@ import {Alert, StyleSheet, View} from 'react-native';
 import {BtnGrup, InputGrup} from '../../components';
 import FIREBASE from '../../config/firebase';
 
+
 export class AddContact extends Component {
   constructor(props) {
     super();
 
     this.state = {
-      nama: '',
-      alamat: '',
+      Judul: '',
+      Tanggal: '',
+      Content: '',
     };
   }
 
@@ -21,17 +23,18 @@ export class AddContact extends Component {
 
   onSubmit = () => {
     // cek apakah data sudah ada di state
-    if (this.state.nama && this.state.alamat) {
+    if (this.state.Judul && this.state.Tanggal && this.state.Content) {
       // buat tabel
-      const tabelKontak = FIREBASE.database().ref('Kontak');
+      const notereferensi = FIREBASE.database().ref('Note');
       // buat daftar kolom dan isi dengan nama kolom di state
-      const kontak = {
-        nama: this.state.nama,
-        alamat: this.state.alamat,
+      const note = {
+        judul: this.state.Judul,
+        tanggal: this.state.Tanggal,
+        content: this.state.Content,
       };
       // buat method untuk tambah kontak
-      tabelKontak
-        .push(kontak)
+      notereferensi
+        .push(note)
         .then(data => {
           Alert.alert('Sukses', 'Catatan berhasil disimpan');
           this.props.navigation.replace('Home');
@@ -40,26 +43,31 @@ export class AddContact extends Component {
           console.log('Error : ', error);
         });
     } else {
-      Alert.alert('Error', 'Judul dan Content wajib di isi');
+      Alert.alert('Error', 'Judul, Tanggal dan Content wajib di isi');
     }
   };
   render() {
     return (
          <View style={styles.wrapper}>
+          
         <InputGrup
           label={'Judul'}
-          placeholder={'Tulis Judul'}
           onChangeText={this.onChangeInput}
-          value={this.state.nama}
-          namaState="nama"
+          value={this.state.Judul}
+          namaState="Judul"
+        />
+        <InputGrup
+          label={'Tanggal'}
+          onChangeText={this.onChangeInput}
+          value={this.state.Tanggal}
+          namaState="Tanggal"
         />
         <InputGrup
           label={'Content'}
-          placeholder={'Tulis Content'}
           isTextArea={true}
           onChangeText={this.onChangeInput}
-          value={this.state.alamat}
-          namaState="alamat"
+          value={this.state.Content}
+          namaState="Content"
         />
         <BtnGrup label="SIMPAN" onPress={() => this.onSubmit()} />
        </View>
@@ -77,4 +85,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#98D4E1',
   },
+  judul:{
+    backgroundColor:'black',
+    height:60,
+  }
 });

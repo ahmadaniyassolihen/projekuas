@@ -1,28 +1,28 @@
-import {faEdit, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faFileSignature, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {BtnIcon} from '..';
 
-const CardContact = ({id, kontakItem, navigation, removeData}) => {
+const CardContact = ({id, contentItem, navigation, removeData}) => {
   return (
     <TouchableOpacity
       style={styles.wrapper}
       onPress={() => navigation.navigate('DetailContact', {id: id})}>
       <View>
-        <Text style={styles.nama}>{kontakItem.nama}</Text>
-        <Text style={styles.noHp}> {kontakItem.alamat}</Text>
+        <Text style={styles.nama}>{contentItem.judul}</Text>
+        <Text style={styles.noHp}> {contentItem.tanggal}</Text>
       </View>
       <View style={styles.icon}>
         <BtnIcon
-          icon={faEdit}
-          color={'#02bbdb'}
-          size={25}
+          icon={faFileSignature}
+          color={'#00cfac'}
+          size={28}
           onPress={() => navigation.navigate('EditContact', {id: id})}
         />
         <BtnIcon
-          icon={faTimes}
-          color={'#23c484'}
+          icon={faTrashAlt}
+          color={'#d60202'}
           size={25}
           onPress={() => removeData(id)}
         />

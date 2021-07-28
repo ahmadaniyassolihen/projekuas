@@ -7,31 +7,35 @@ export class DetailContact extends Component {
     super(props);
 
     this.state = {
-      kontaks: {},
+      notes: {},
     };
   }
 
   componentDidMount() {
     FIREBASE.database()
-      .ref('Kontak/' + this.props.route.params.id)
+      .ref('Note/' + this.props.route.params.id)
       .once('value', querySnapShot => {
         let data = querySnapShot.val() ? querySnapShot.val() : {};
-        let kontakItem = {...data};
+        let contentItem = {...data};
 
         this.setState({
-          kontaks: kontakItem,
+          notes: contentItem,
         });
       });
   }
 
   render() {
-    const {kontaks} = this.state;
+    const {notes} = this.state;
     return (
+       <View style={styles.container}>
       <View style={styles.wrapper}>
         <Text>Judul :</Text>
-        <Text style={styles.text}>{kontaks.nama}</Text>
+        <Text style={styles.text}>{notes.judul}</Text>
+        <Text>Tanggal :</Text>
+        <Text style={styles.text}>{notes.tanggal}</Text>
         <Text>Content :</Text>
-        <Text style={styles.text}>{kontaks.alamat}</Text>
+        <Text style={styles.text}>{notes.content}</Text>
+      </View>
       </View>
     );
   }
@@ -40,6 +44,10 @@ export class DetailContact extends Component {
 export default DetailContact;
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#98D4E1',
+  },
   wrapper: {
     padding: 20,
     margin: 30,

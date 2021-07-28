@@ -8,21 +8,23 @@ export class EditContact extends Component {
     super();
 
     this.state = {
-      nama: '',
-      alamat: '',
+      Judul: '',
+      Tanggal: '',
+      Content: '',
     };
   }
 
   componentDidMount() {
     FIREBASE.database()
-      .ref('Kontak/' + this.props.route.params.id)
+      .ref('Note/' + this.props.route.params.id)
       .once('value', querySnapShot => {
         let data = querySnapShot.val() ? querySnapShot.val() : {};
-        let kontakItem = {...data};
+        let contentItem = {...data};
 
         this.setState({
-          nama: kontakItem.nama,
-          alamat: kontakItem.alamat,
+          Judul: contentItem.judul,
+          Tanggal: contentItem.tanggal,
+          Content: contentItem.content,
         });
       });
   }
@@ -35,19 +37,20 @@ export class EditContact extends Component {
 
   onSubmit = () => {
     // cek apakah data sudah ada di state
-    if (this.state.nama && this.state.alamat) {
+    if (this.state.Judul && this.state.Tanggal && this.state.Content) {
       // update pada tabel di kolom tertentu
-      const tabelKontak = FIREBASE.database().ref(
-        'Kontak/' + this.props.route.params.id,
+      const notereferensi = FIREBASE.database().ref(
+        'Note/' + this.props.route.params.id,
       );
       // buat daftar kolom yang akan di update
-      const kontak = {
-        nama: this.state.nama,
-        alamat: this.state.alamat,
+      const note = {
+        judul: this.state.Judul,
+        tanggal: this.state.Tanggal,
+        content: this.state.Content,
       };
       // buat method untuk update catatan
-      tabelKontak
-        .update(kontak)
+      notereferensi
+        .update(note)
         .then(data => {
           Alert.alert('Sukses', 'Catatan berhasil di update');
           this.props.navigation.replace('Home');
@@ -67,18 +70,25 @@ export class EditContact extends Component {
           label={'Judul'}
           placeholder={'Tulis Judul'}
           onChangeText={this.onChangeInput}
-          value={this.state.nama}
-          namaState="nama"
+          value={this.state.Judul}
+          namaState="Judul"
+        />
+        <InputGrup
+          label={'Tanggal'}
+          placeholder={'Tulis Tanggal'}
+          onChangeText={this.onChangeInput}
+          value={this.state.Tanggal}
+          namaState="Tanggal"
         />
         <InputGrup
           label={'Content'}
           placeholder={'Tulis Content'}
           isTextArea={true}
           onChangeText={this.onChangeInput}
-          value={this.state.alamat}
-          namaState="alamat"
+          value={this.state.Content}
+          namaState="Content"
         />
-        <BtnGrup label="Update" onPress={() => this.onSubmit()} />
+        <BtnGrup label="UPDATE" onPress={() => this.onSubmit()} />
       </View>
     );
   }
