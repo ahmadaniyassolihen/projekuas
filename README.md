@@ -1,6 +1,4 @@
-# MINI CONTACT LIST - FIREBASE
-Sebuah mini proyek percobaan untuk pembelajaran React-Native dengan menggunakan REST API Firebase.
-Semoga bermanfaat.
+
 ## Setting Git secara global
 ```
 git config --global user.name "Rofiuddin"
